@@ -4,7 +4,7 @@
   "description": "Backend del proyecto de Lenguajes Modernos de Programación",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon run dev"
+    "dev": "nodemon ./src/index.js"
   },
   "author": "Javier Matadamas - JAntonioCG",
   "license": "ISC",
