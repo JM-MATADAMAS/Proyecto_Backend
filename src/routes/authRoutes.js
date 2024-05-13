@@ -8,3 +8,4 @@ router.get('/get-allusers', authMiddleware, authController.getAllUsers)
 router.delete('/delete-user/:id', authMiddleware, authController.deleteUser)
 router.put('/update-user/:id', authMiddleware, authController.updateUser)
 module.exports = router
+//owo
