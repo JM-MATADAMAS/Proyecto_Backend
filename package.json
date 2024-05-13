@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon run dev"
   },
-  "author": "Javier Matadamas",
+  "author": "Javier Matadamas - JAntonioCG",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.1",
