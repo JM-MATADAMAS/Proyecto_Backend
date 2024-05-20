@@ -6,7 +6,7 @@ const { use } = require('../routes/authRoutes')
 exports.signup = async (req, res) => { //modificado
   try {
     //Codigo para registrarse
-    const { email, password, id, nombre, apaterno, amaterno, direccion, telefono, estado } = req.body
+    const { email, password, id, nombre, clase, genero } = req.body
     const existingUser = await findUserByEmail(email)
     if(existingUser.success) {
       return res.status(400).json({
@@ -20,12 +20,9 @@ exports.signup = async (req, res) => { //modificado
       password: hashedPassword,
       id: id,
       nombre: nombre,
-      apaterno: apaterno,
-      amaterno: amaterno,
-      direccion: direccion,
-      telefono: telefono,
-      estado: estado
-      // agregar otros campos 
+      clase: clase,
+      genero: genero
+      // Se agregaron campos para estudiante 
     }
     console.log('@@@ AuthController =>', newUser.email, ' ', newUser.password)
     const userResult = await createUser(newUser)
