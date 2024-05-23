@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken')
 const { createUser, findUserByEmail, getAllUsers, deleteUser, updateUser } = require('../models/userModel')
 require('dotenv').config()
 
-exports.NuevoUsuario = async (userData) => {
+exports.createUser = async (userData) => {
   try {
     const createdUser = await createUser(userData)
     if (createdUser.success) {
