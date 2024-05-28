@@ -83,3 +83,26 @@ exports.updateUser = async (userId, userData) => {
     throw new Error('Error Updating user' + error.message)
   }
 }
+exports.findUserByNombreSchool = async (nombreSchool) => {
+  try {
+
+    const userSchool = await usersCollection.where('nombreSchool', '==', nombreSchool).get();
+    if (!userSchool.empty) {
+      const userFound = userSchool.docs[0];
+      return {
+        success: true,
+        user: userFound.data()
+      };
+    } else {
+      return {
+        success: false,
+        error: 'Usuario no encontrado'
+      };
+    }
+  } catch (error) {
+    return {
+      success: false,
+      error: error.message
+    };
+  }
+}

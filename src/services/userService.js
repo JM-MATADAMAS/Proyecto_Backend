@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const { createUser, findUserByEmail, getAllUsers, deleteUser, updateUser } = require('../models/userModel')
+const { createUser, findUserByEmail, findUserByNombreSchool, getAllUsers, deleteUser, updateUser } = require('../models/userModel')
 require('dotenv').config()
 
 exports.createUser = async (userData) => {
@@ -83,5 +83,25 @@ exports.updateUser = async (userId, userData) => {
     await updateUser(userId, userData)
   } catch (error) {
     throw new Error('Error Updating user' + error.message)
+  }
+}
+exports.findUserByNombreSchool = async (nombreSchool) => {
+  try {
+    const found = await findUserByNombreSchool(nombreSchool)
+    if (found.success) {
+      return {
+        success: true,
+        user: found.user
+      }
+    }
+    return {
+      success: false,
+      message: 'Usuario No Encontrado'
+    }
+  } catch (error) {
+    return {
+      success: false,
+      error: error.message
+    }
   }
 }

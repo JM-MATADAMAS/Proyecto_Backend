@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt')
 const jsonwebtoken = require('jsonwebtoken')
-const { createUser, findUserByEmail, getAllUsers, deleteUser, updateUser } = require('../services/userService')
+const { createUser, findUserByEmail, findUserByNombreSchool, getAllUsers, deleteUser, updateUser } = require('../services/userService')
 const { use } = require('../routes/authRoutes')
 
 exports.signup = async (req, res) => { //modificado
@@ -45,36 +45,42 @@ exports.signup = async (req, res) => { //modificado
 
 exports.login = async (req, res) => {
   try {
-    //Codigo para loggearmos
-    const { email, password } = req.body
-    const findEmail = await findUserByEmail(email)
-    if (!findEmail.success) {
+    const { nombreSchool, password } = req.body;
+
+    const findSchool = await findUserByNombreSchool(nombreSchool);
+    if (!findSchool.success) {
       return res.status(401).json({
         message: 'Usuario no encontrado'
-      })
+      });
     }
-    const user = findEmail.user
-    const findPassword = await bcrypt.compare(password, user.password)
+
+    const user = findSchool.user;
+
+    const findPassword = await bcrypt.compare(password, user.password);
     if (!findPassword) {
       return res.status(401).json({
         message: 'Password incorrecta'
-      })
+      });
     }
+
     const token = jsonwebtoken.sign({
-      email: user.email,
+      nombreSchool: user.nombreSchool,
       userId: user.id
     }, process.env.TOP_SECRET, {
       expiresIn: '1h'
-    })
+    });
+
     res.status(200).json({
-      token: token
-    })
+      token: token,
+      message: 'Logged In'
+    });
   } catch (error) {
-      res.status(500).json({
-        message: error.message
-    })
+    console.error('Error en el login:', error.message);
+    res.status(500).json({
+      message: error.message
+    });
   }
-}
+};
 
 exports.getAllUsers = async (req, res) => {
   try {
