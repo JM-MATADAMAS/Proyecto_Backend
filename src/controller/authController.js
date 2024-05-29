@@ -5,7 +5,7 @@ const { use } = require('../routes/authRoutes')
 
 exports.signup = async (req, res) => { //modificado
   try {
-    //Codigo para registrarse
+    //Codigo para registrarse (Se agregaron los datos del singup y login)
     const { email, password, id, nombreAdmin, nombreSchool, numeroStaff, directionSchool } = req.body
     const existingUser = await findUserByEmail(email)
     if(existingUser.success) {
@@ -25,7 +25,7 @@ exports.signup = async (req, res) => { //modificado
       directionSchool: directionSchool
       // Se agregaron campos para estudiante 
     }
-    console.log('@@@ AuthController =>', newUser.email, ' ', newUser.password)
+    //console.log('@@@ AuthController =>', newUser.email, ' ', newUser.password)
     const userResult = await createUser(newUser)
     if(userResult.success) {
       res.status(201).json({
@@ -62,7 +62,7 @@ exports.login = async (req, res) => {
         message: 'Password incorrecta'
       });
     }
-
+    // Token para 1 hora
     const token = jsonwebtoken.sign({
       nombreSchool: user.nombreSchool,
       userId: user.id
