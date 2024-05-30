@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const { createUser, findUserByEmail, findUserByNombreSchool, getAllUsers, deleteUser, updateUser, createTeacher, findUserByEmailTeacher } = require('../models/userModel')
+const { createUser, findUserByEmail, findUserByNombreSchool, getAllUsers, deleteUser, updateUser, createTeacher, findUserByEmailTeacher, getAllTeachersFromModel } = require('../models/userModel')
 require('dotenv').config()
 
 exports.createUser = async (userData) => {
@@ -144,3 +144,14 @@ exports.findUserByEmailTeacher = async (email) => {
     }
   }
 }
+exports.getAllTeachers = async () => {
+  try {
+    const teachers = await getAllTeachersFromModel();
+    return {
+      success: true,
+      teachers
+    };
+  } catch (error) {
+    throw new Error('Error Getting teachers: ' + error.message);
+  }
+};

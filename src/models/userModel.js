@@ -122,7 +122,6 @@ exports.createTeacher = async (userData1) => {
       }
     }
   }
-
 exports.findUserByEmailTeacher = async (email) => {
     try {
       const userEmail = await TeachersCollection.where('email', '==', email).get()
@@ -145,3 +144,15 @@ exports.findUserByEmailTeacher = async (email) => {
       }
     }
 }
+exports.getAllTeachersFromModel = async () => {
+  try {
+    const allTeachers = await TeachersCollection.get();
+    const teachers = [];
+    allTeachers.forEach((doc) => {
+      teachers.push(doc.data());
+    });
+    return teachers;
+  } catch (error) {
+    throw new Error('Error getting teachers: ' + error.message);
+  }
+};

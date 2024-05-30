@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt')
 const jsonwebtoken = require('jsonwebtoken')
-const { createUser, findUserByEmail, findUserByNombreSchool, getAllUsers, deleteUser, updateUser, createTeacher, findUserByEmailTeacher } = require('../services/userService')
+const { createUser, findUserByEmail, findUserByNombreSchool, getAllUsers, deleteUser, updateUser, createTeacher, findUserByEmailTeacher, getAllTeachers } = require('../services/userService')
 const { use } = require('../routes/authRoutes')
 
 exports.signup = async (req, res) => { //modificado
@@ -170,3 +170,18 @@ exports.deleteUser = async (req, res) => {
     })
   }
 }
+
+exports.getAllTeachers = async (req, res) => {
+  try {
+    const teachers = await getAllTeachers(); // Llamada al servicio
+    res.status(200).json({
+      message: 'Success',
+      teachers
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: 'Server Error Getting all teachers',
+      error: error.message
+    });
+  }
+};
