@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt')
 const jsonwebtoken = require('jsonwebtoken')
-const { createUser, findUserByEmail, findUserByNombreSchool, getAllUsers, deleteUser, updateUser, createTeacher, findUserByEmailTeacher, getAllTeachers } = require('../services/userService')
+const { createUser, findUserByEmail, findUserByNombreSchool, getAllUsers, deleteUser, updateUser } = require('../services/userService')
+const { createTeacher, findUserByEmailTeacher, getAllTeachers } = require('../services/teacherService')
 const { use } = require('../routes/authRoutes')
 
 exports.signup = async (req, res) => { //modificado
