@@ -2,6 +2,8 @@ const bcrypt = require('bcrypt')
 const jsonwebtoken = require('jsonwebtoken')
 const { createUser, findUserByEmail, findUserByNombreSchool, getAllUsers, deleteUser, updateUser } = require('../services/userService')
 const { createTeacher, findUserByEmailTeacher, getAllTeachers } = require('../services/teacherService')
+const { createStudent, findUserByEmailStudent, getAllStudents } = require('../services/studentsService')
+
 const { use } = require('../routes/authRoutes')
 
 exports.signup = async (req, res) => { //modificado
@@ -28,47 +30,6 @@ exports.signup = async (req, res) => { //modificado
     }
     //console.log('@@@ AuthController =>', newUser.email, ' ', newUser.password)
     const userResult = await createUser(newUser)
-    if(userResult.success) {
-      res.status(201).json({
-        message: 'Usuario Registrado Satisfactoriamente'
-      })
-    } else {
-      res.status(500).json({
-        message: 'Error al registrar usuarios'
-      })
-    }
-  } catch (error) {
-    res.status(500).json({
-        message: error.message
-    })
-  }
-}
-
-exports.signupTeacher = async (req, res) => { //modificado
-  try {
-    //Codigo para registrar maestros en modo sexo
-    const { email, password, id, fullName, clase, genero, phoneNumber, subject } = req.body
-    const existingUser1 = await findUserByEmailTeacher(email)
-    if(existingUser1.success) {
-      return res.status(400).json({
-        message: 'El usuario ya esta registrado'
-      })
-    }
-    const saltRounds = 10
-    const hashedPassword = await bcrypt.hash(password, saltRounds)
-    const newUser = {
-      email: email,
-      password: hashedPassword,
-      id: id,
-      fullName: fullName,
-      clase: clase,
-      genero: genero,
-      phoneNumber: phoneNumber,
-      subject: subject
-      // Se agregaron campos para maestro 
-    }
-    //console.log('@@@ AuthController =>', newUser.email, ' ', newUser.password)
-    const userResult = await createTeacher(newUser)
     if(userResult.success) {
       res.status(201).json({
         message: 'Usuario Registrado Satisfactoriamente'
@@ -172,9 +133,105 @@ exports.deleteUser = async (req, res) => {
   }
 }
 
+exports.signupTeacher = async (req, res) => { //modificado
+  try {
+    //Codigo para registrar maestros en modo sexo
+    const { email, password, id, fullName, clase, genero, phoneNumber, subject } = req.body
+    const existingUser1 = await findUserByEmailTeacher(email)
+    if(existingUser1.success) {
+      return res.status(400).json({
+        message: 'El usuario ya esta registrado'
+      })
+    }
+    const saltRounds = 10
+    const hashedPassword = await bcrypt.hash(password, saltRounds)
+    const newUser = {
+      email: email,
+      password: hashedPassword,
+      id: id,
+      fullName: fullName,
+      clase: clase,
+      genero: genero,
+      phoneNumber: phoneNumber,
+      subject: subject
+      // Se agregaron campos para maestro 
+    }
+    //console.log('@@@ AuthController =>', newUser.email, ' ', newUser.password)
+    const userResult = await createTeacher(newUser)
+    if(userResult.success) {
+      res.status(201).json({
+        message: 'Usuario Registrado Satisfactoriamente'
+      })
+    } else {
+      res.status(500).json({
+        message: 'Error al registrar usuarios'
+      })
+    }
+  } catch (error) {
+    res.status(500).json({
+        message: error.message
+    })
+  }
+}
+
 exports.getAllTeachers = async (req, res) => {
   try {
     const teachers = await getAllTeachers(); // Llamada al servicio
+    res.status(200).json({
+      message: 'Success',
+      teachers
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: 'Server Error Getting all teachers',
+      error: error.message
+    });
+  }
+};
+
+exports.signupStudents = async (req, res) => { //modificado
+  try {
+    //Codigo para registrar maestros en modo sexo
+    const { email, password, id, fullName, clase, genero, phoneNumber } = req.body
+    const existingUser2 = await findUserByEmailStudent(email)
+    if(existingUser2.success) {
+      return res.status(400).json({
+        message: 'El usuario ya esta registrado'
+      })
+    }
+    const saltRounds = 10
+    const hashedPassword = await bcrypt.hash(password, saltRounds)
+    const newUser = {
+      email: email,
+      password: hashedPassword,
+      id: id,
+      fullName: fullName,
+      clase: clase,
+      genero: genero,
+      phoneNumber: phoneNumber
+      // Se agregaron campos para maestro 
+    }
+    //console.log('@@@ AuthController =>', newUser.email, ' ', newUser.password)
+    const userResult = await createStudent(newUser)
+    if(userResult.success) {
+      res.status(201).json({
+        message: 'Usuario Registrado Satisfactoriamente'
+      })
+    } else {
+      res.status(500).json({
+        message: 'Error al registrar usuarios'
+      })
+    }
+  } catch (error) {
+    res.status(500).json({
+        message: error.message
+    })
+  }
+}
+
+exports.getAllStudents = async (req, res) => {
+  try {
+    const teachers = await getAllStudents(); // Llamada al servicio
     res.status(200).json({
       message: 'Success',
       teachers

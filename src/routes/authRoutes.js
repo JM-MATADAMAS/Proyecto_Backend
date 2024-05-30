@@ -4,6 +4,7 @@ const authController = require('../controller/authController')
 const authMiddleware = require('../middleware/authMiddleware')
 router.post('/signup', authController.signup)
 router.post('/signupTeacher', authController.signupTeacher) // 
+router.post('/signupStudents', authController.signupStudents) // 
 router.post('/login', authController.login)
 router.get('/get-allusers', authMiddleware, authController.getAllUsers)
 router.get('/get-allteachers', authMiddleware, authController.getAllTeachers);
