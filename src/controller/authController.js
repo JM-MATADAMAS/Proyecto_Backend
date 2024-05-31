@@ -70,11 +70,12 @@ exports.login = async (req, res) => {
       nombreSchool: user.nombreSchool,
       userId: user.id
     }, process.env.TOP_SECRET, {
-      expiresIn: '1h'
+      expiresIn: '1d'
     });
 
     res.status(200).json({
       token: token,
+      nombreSchool: nombreSchool,
       message: 'Logged In'
     });
   } catch (error) {
@@ -136,7 +137,7 @@ exports.deleteUser = async (req, res) => {
 exports.signupTeacher = async (req, res) => { //modificado
   try {
     //Codigo para registrar maestros en modo sexo
-    const { email, password, id, fullName, clase, genero, phoneNumber, subject } = req.body
+    const { email, password, id, fullName, clase, genero, phoneNumber, subject, designation } = req.body
     const existingUser1 = await findUserByEmailTeacher(email)
     if(existingUser1.success) {
       return res.status(400).json({
@@ -153,7 +154,8 @@ exports.signupTeacher = async (req, res) => { //modificado
       clase: clase,
       genero: genero,
       phoneNumber: phoneNumber,
-      subject: subject
+      subject: subject,
+      designation: designation
       // Se agregaron campos para maestro 
     }
     //console.log('@@@ AuthController =>', newUser.email, ' ', newUser.password)

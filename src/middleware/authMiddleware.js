@@ -21,7 +21,6 @@ const authMiddleware = (req, res, next) => {
   try {
     const validToken = jwt.verify(tokenParts[1], process.env.TOP_SECRET);
     req.userData = validToken;
-    console.log('Token válido');
     next();
   } catch (error) {
     return res.status(401).json({
