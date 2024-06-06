@@ -8,6 +8,7 @@ router.post('/signupStudents', authController.signupStudents) //
 router.post('/login', authController.login)
 router.get('/get-allusers', authMiddleware, authController.getAllUsers)
 router.get('/get-allteachers', authMiddleware, authController.getAllTeachers);
+router.get('/get-allstudents', authMiddleware, authController.getAllStudents);
 router.delete('/delete-user/:id', authMiddleware, authController.deleteUser)
 router.put('/update-user/:id', authMiddleware, authController.updateUser)
 module.exports = router;

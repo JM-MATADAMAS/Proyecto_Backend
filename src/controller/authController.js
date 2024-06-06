@@ -194,7 +194,7 @@ exports.getAllTeachers = async (req, res) => {
 exports.signupStudents = async (req, res) => { //modificado
   try {
     //Codigo para registrar maestros en modo sexo
-    const { email, password, id, fullName, clase, genero, phoneNumber } = req.body
+    const { email, password, id, fullName, clase, genero, phoneNumber, designation } = req.body
     const existingUser2 = await findUserByEmailStudent(email)
     if(existingUser2.success) {
       return res.status(400).json({
@@ -210,7 +210,8 @@ exports.signupStudents = async (req, res) => { //modificado
       fullName: fullName,
       clase: clase,
       genero: genero,
-      phoneNumber: phoneNumber
+      phoneNumber: phoneNumber,
+      designation: designation
       // Se agregaron campos para maestro 
     }
     //console.log('@@@ AuthController =>', newUser.email, ' ', newUser.password)
@@ -233,14 +234,14 @@ exports.signupStudents = async (req, res) => { //modificado
 
 exports.getAllStudents = async (req, res) => {
   try {
-    const teachers = await getAllStudents(); // Llamada al servicio
+    const students = await getAllStudents(); // Llamada al servicio
     res.status(200).json({
       message: 'Success',
-      teachers
+      students
     });
   } catch (error) {
     res.status(500).json({
-      message: 'Server Error Getting all teachers',
+      message: 'Server Error Getting all students',
       error: error.message
     });
   }

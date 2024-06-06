@@ -22,7 +22,7 @@ exports.createStudent = async (userData) => {
       }
     }
   }
-  exports.findUserByEmailStudent = async (email) => {
+exports.findUserByEmailStudent = async (email) => {
     try {
       const found = await findUserByEmailStudent(email)
       if (found.success) {
@@ -42,14 +42,14 @@ exports.createStudent = async (userData) => {
       }
     }
   }
-  exports.getAllStudents = async () => {
+exports.getAllStudents = async () => {
     try {
-      const teachers = await getAllStudentsFromModel();
+      const students = await getAllStudentsFromModel();
       return {
         success: true,
-        teachers
+        students
       };
     } catch (error) {
-      throw new Error('Error Getting teachers: ' + error.message);
+      throw new Error('Error Getting students: ' + error.message);
     }
   };

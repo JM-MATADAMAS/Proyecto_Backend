@@ -15,7 +15,7 @@ exports.createStudent = async (userData2) => {
         }
       }
     }
-  exports.findUserByEmailStudent = async (email) => {
+exports.findUserByEmailStudent = async (email) => {
       try {
         const userEmail = await studentsCollection.where('email', '==', email).get()
         if (!userEmail.empty) {
@@ -36,8 +36,8 @@ exports.createStudent = async (userData2) => {
           error: error.message
         }
       }
-  }
-  exports.getAllStudentsFromModel = async () => {
+}
+exports.getAllStudentsFromModel = async () => {
     try {
       const allStudents = await studentsCollection.get();
       const students = [];
